@@ -1,0 +1,7 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    "unicode-bom": "off",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
