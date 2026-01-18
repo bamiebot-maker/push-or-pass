@@ -72,6 +72,7 @@ function App() {
 
         <footer className="app-footer">
           <p>Push or Pass © {new Date().getFullYear()} | Daily reset at midnight UTC</p>
+          <p>Built By <a href="https://bamietechdev.vercel.app">Bamietech</a></p>
         </footer>
       </div>
     </Router>
