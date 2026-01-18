@@ -3,28 +3,33 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
 }
 
 .app-header {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(30, 41, 59, 0.8);
   backdrop-filter: blur(10px);
   padding: 1.5rem;
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .app-header h1 {
   margin: 0;
   font-size: 2.5rem;
-  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+  background: linear-gradient(45deg, #00BCD4, #2196F3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tagline {
   margin: 0.5rem 0 1.5rem;
-  opacity: 0.9;
+  color: #b0b0b0;
+  font-size: 1.1rem;
 }
 
 .nav-links {
@@ -35,30 +40,36 @@
 }
 
 .nav-links a {
-  color: white;
+  color: #ffffff;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(33, 150, 243, 0.1);
+  border: 1px solid rgba(33, 150, 243, 0.3);
+  font-weight: 500;
 }
 
 .nav-links a:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(33, 150, 243, 0.2);
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .phase-indicator {
   margin-top: 1rem;
   font-size: 0.9rem;
-  opacity: 0.8;
+  color: #b0b0b0;
 }
 
 .phase-badge {
-  background: #4CAF50;
-  padding: 0.2rem 0.5rem;
-  border-radius: 10px;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
   font-weight: bold;
+  color: white;
+  margin-left: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .app-main {
@@ -70,20 +81,22 @@
 }
 
 .home-container {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(30, 30, 40, 0.8);
   padding: 3rem;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .home-container h2 {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .home-container p {
-  color: #666;
+  color: #b0b0b0;
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -104,29 +117,32 @@
   font-size: 1.1rem;
   transition: all 0.3s ease;
   display: inline-block;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .vote-button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, #2196F3, #1976D2);
   color: white;
 }
 
 .play-button {
-  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+  background: linear-gradient(45deg, #00BCD4, #0097A7);
   color: white;
 }
 
 .action-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .app-footer {
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
+  background: rgba(15, 23, 42, 0.8);
+  color: #b0b0b0;
   padding: 1rem;
   margin-top: auto;
   font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -142,5 +158,9 @@
   
   .home-container {
     padding: 2rem 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
   }
 }

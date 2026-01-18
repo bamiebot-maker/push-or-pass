@@ -1,29 +1,42 @@
 ﻿import React, { useState, useEffect } from 'react';
 import './ButtonGame.css';
+import { Link } from 'react-router-dom';
 
 function ButtonGame() {
   const [gameState, setGameState] = useState(() => {
     const saved = localStorage.getItem('pushpass_gameState');
-    return saved ? JSON.parse(saved) : {
-      communityScore: 1000,
-      playerPushes: 0,
-      totalPushes: 0,
-      playerStreak: 0,
-      lastPushDate: null,
-      todaysPushes: 0,
-      maxPushesToday: 50
-    };
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      // Initial state for new players
+      return {
+        communityScore: 1000,
+        playerPushes: 0,
+        totalPushes: 0,
+        playerStreak: 0,
+        lastPushDate: null,
+        todaysPushes: 0,
+        maxPushesToday: 50,
+        isFirstTime: true
+      };
+    }
   });
 
   const [todaysConfig, setTodaysConfig] = useState(() => {
     const saved = localStorage.getItem('pushpass_todaysConfig');
-    return saved ? JSON.parse(saved) : {
-      mode: 'help', // help, hard, limited
-      description: 'Help the community: Each push adds +2 points for everyone',
-      multiplier: 2,
-      basePoints: 1,
-      maxPushes: 50
-    };
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      // Default config for first-time players
+      return {
+        mode: 'help',
+        description: 'Help the community: Each push adds +2 points for everyone',
+        multiplier: 2,
+        basePoints: 1,
+        maxPushes: 50,
+        isFirstDay: true
+      };
+    }
   });
 
   const [recentPushes, setRecentPushes] = useState(() => {
@@ -33,15 +46,42 @@ function ButtonGame() {
 
   const [buttonEffects, setButtonEffects] = useState([]);
   const [gameEffects, setGameEffects] = useState([]);
+  const [isFirstTime, setIsFirstTime] = useState(!localStorage.getItem('pushpass_gameState'));
+
+  // Initialize game if first time
+  useEffect(() => {
+    if (isFirstTime) {
+      const today = new Date().toISOString().split('T')[0];
+      
+      // Set initial config
+      const initialConfig = {
+        mode: 'help',
+        description: 'Welcome to Push or Pass! Each push adds +2 points for everyone',
+        multiplier: 2,
+        basePoints: 1,
+        maxPushes: 50,
+        isFirstDay: true
+      };
+      
+      setTodaysConfig(initialConfig);
+      localStorage.setItem('pushpass_todaysConfig', JSON.stringify(initialConfig));
+      localStorage.setItem('pushpass_configDate', today);
+      
+      // Mark as not first time
+      setIsFirstTime(false);
+    }
+  }, [isFirstTime]);
 
   // Load yesterday's vote result (for demo, we'll simulate it)
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     const lastConfigDate = localStorage.getItem('pushpass_configDate');
     
-    if (lastConfigDate !== today) {
-      // Determine today's config based on yesterday's votes (simulated)
+    if (!lastConfigDate || lastConfigDate !== today) {
+      // Determine today's config based on yesterday's votes
       const votes = JSON.parse(localStorage.getItem('pushpass_votes') || '[]');
+      
+      // Get yesterday's date
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yesterdayStr = yesterday.toISOString().split('T')[0];
@@ -59,7 +99,7 @@ function ButtonGame() {
           maxPushes: 50
         };
       } else {
-        // Determine winning option (simplified - just pick most frequent)
+        // Determine winning option
         const voteCounts = { 1: 0, 2: 0, 3: 0 };
         yesterdayVotes.forEach(v => {
           voteCounts[v.option] = (voteCounts[v.option] || 0) + 1;
@@ -110,7 +150,8 @@ function ButtonGame() {
       const newGameState = {
         ...gameState,
         todaysPushes: 0,
-        maxPushesToday: newConfig.maxPushes
+        maxPushesToday: newConfig.maxPushes,
+        isFirstTime: false
       };
       setGameState(newGameState);
       localStorage.setItem('pushpass_gameState', JSON.stringify(newGameState));
@@ -141,7 +182,8 @@ function ButtonGame() {
       playerPushes: gameState.playerPushes + 1,
       totalPushes: gameState.totalPushes + 1,
       todaysPushes: gameState.todaysPushes + 1,
-      lastPushDate: new Date().toISOString()
+      lastPushDate: new Date().toISOString(),
+      isFirstTime: false
     };
 
     // Check for streak
@@ -245,13 +287,13 @@ function ButtonGame() {
   const getButtonStyle = () => {
     switch(todaysConfig.mode) {
       case 'help':
-        return { background: 'linear-gradient(45deg, #4CAF50, #45a049)' };
+        return { background: 'linear-gradient(45deg, #00BCD4, #0097A7)' };
       case 'hard':
         return { background: 'linear-gradient(45deg, #FF9800, #F57C00)' };
       case 'limited':
-        return { background: 'linear-gradient(45deg, #2196F3, #1976D2)' };
+        return { background: 'linear-gradient(45deg, #9C27B0, #7B1FA2)' };
       default:
-        return { background: 'linear-gradient(45deg, #667eea, #764ba2)' };
+        return { background: 'linear-gradient(45deg, #2196F3, #1976D2)' };
     }
   };
 
@@ -264,14 +306,77 @@ function ButtonGame() {
     }
   };
 
+  // Welcome message for first-time players
+  if (todaysConfig.isFirstDay || isFirstTime) {
+    return (
+      <div className="button-game first-day">
+        <div className="welcome-message">
+          <h2>🎮 Welcome to Push or Pass!</h2>
+          <div className="welcome-card">
+            <div className="welcome-icon">🎯</div>
+            <h3>Your First Day</h3>
+            <p>Welcome to the daily community button game! Here's how it works:</p>
+            
+            <div className="welcome-steps">
+              <div className="step">
+                <span className="step-number">1</span>
+                <div className="step-content">
+                  <h4>Vote Daily</h4>
+                  <p>Each day, vote on how tomorrow's button should behave</p>
+                  <Link to="/vote" className="step-link">Go Vote Now →</Link>
+                </div>
+              </div>
+              
+              <div className="step">
+                <span className="step-number">2</span>
+                <div className="step-content">
+                  <h4>Play Today's Game</h4>
+                  <p>Button behavior is based on yesterday's community vote</p>
+                </div>
+              </div>
+              
+              <div className="step">
+                <span className="step-number">3</span>
+                <div className="step-content">
+                  <h4>Build Streaks</h4>
+                  <p>Come back daily to maintain your streak and climb the leaderboard</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="todays-preview">
+              <h4>Today's Button Preview</h4>
+              <div className="preview-button" style={getButtonStyle()}>
+                <span className="button-emoji">{getButtonEmoji()}</span>
+                <span className="button-text">PUSH</span>
+              </div>
+              <p className="preview-desc">{todaysConfig.description}</p>
+            </div>
+            
+            <button 
+              className="start-playing-btn"
+              onClick={() => {
+                const updatedConfig = { ...todaysConfig, isFirstDay: false };
+                setTodaysConfig(updatedConfig);
+                localStorage.setItem('pushpass_todaysConfig', JSON.stringify(updatedConfig));
+              }}
+            >
+              Start Playing Today's Game
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="button-game">
       <div className="game-header">
         <h2>🎮 Today's Button Challenge</h2>
         <div className="todays-config">
           <span className="config-badge" style={{
-            background: todaysConfig.mode === 'help' ? '#4CAF50' : 
-                       todaysConfig.mode === 'hard' ? '#FF9800' : '#2196F3'
+            background: todaysConfig.mode === 'help' ? '#00BCD4' : 
+                       todaysConfig.mode === 'hard' ? '#FF9800' : '#9C27B0'
           }}>
             {getButtonEmoji()} {todaysConfig.mode.toUpperCase()} MODE
           </span>

@@ -1,10 +1,34 @@
 ﻿.leaderboard {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(30, 30, 40, 0.95);
   border-radius: 20px;
   padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   max-width: 1000px;
   margin: 0 auto;
+  color: #ffffff;
+}
+
+.leaderboard.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(33, 150, 243, 0.3);
+  border-top: 4px solid #2196F3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .leaderboard-header {
@@ -13,27 +37,34 @@
 }
 
 .leaderboard-header h2 {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 0.5rem;
   font-size: 2rem;
+  background: linear-gradient(45deg, #00BCD4, #2196F3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .leaderboard-subtitle {
-  color: #666;
+  color: #b0b0b0;
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
 
 .user-rank-card {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #2196F3, #1976D2);
   color: white;
-  padding: 1rem 2rem;
+  padding: 1.5rem;
   border-radius: 15px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 1rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 250px;
 }
 
 .user-rank-label {
@@ -42,8 +73,23 @@
 }
 
 .user-rank-value {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
+}
+
+.user-stats {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.user-stat {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
 }
 
 .filter-tabs {
@@ -57,36 +103,39 @@
   padding: 0.8rem 2rem;
   border: none;
   border-radius: 25px;
-  background: #f0f0f0;
-  color: #666;
+  background: rgba(40, 40, 50, 0.8);
+  color: #b0b0b0;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .filter-tab:hover {
-  background: #e0e0e0;
+  background: rgba(50, 50, 60, 0.9);
+  color: #ffffff;
   transform: translateY(-2px);
 }
 
 .filter-tab.active {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, #2196F3, #00BCD4);
   color: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .leaderboard-table {
-  background: white;
+  background: rgba(40, 40, 50, 0.8);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .table-header {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, #2196F3, #1976D2);
   color: white;
   font-weight: bold;
   padding: 1rem;
@@ -106,18 +155,18 @@
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
   padding: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background-color 0.3s ease;
   align-items: center;
 }
 
 .table-row:hover {
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .table-row.user-row {
-  background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-  border-left: 4px solid #667eea;
+  background: linear-gradient(90deg, rgba(33, 150, 243, 0.2), rgba(0, 188, 212, 0.2));
+  border-left: 4px solid #00BCD4;
 }
 
 .cell {
@@ -147,16 +196,26 @@
   justify-content: center;
   gap: 0.5rem;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
 }
 
 .you-badge {
-  background: #667eea;
+  background: #00BCD4;
   color: white;
   padding: 0.2rem 0.5rem;
   border-radius: 10px;
   font-size: 0.7rem;
   font-weight: bold;
+}
+
+.top-player-badge {
+  background: rgba(255, 215, 0, 0.2);
+  color: #FFD700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .score-cell, .pushes-cell, .streak-cell {
@@ -165,12 +224,12 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
 }
 
 .metric-label {
   font-size: 0.8rem;
-  color: #666;
+  color: #b0b0b0;
   font-weight: normal;
   margin-top: 0.2rem;
 }
@@ -183,103 +242,117 @@
   margin-left: 0.5rem;
 }
 
-.leaderboard-stats {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-  .leaderboard-stats {
-    grid-template-columns: 1fr;
-  }
-  
-  .table-header, .table-row {
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
-    font-size: 0.9rem;
-  }
-}
-
-.stat-summary {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 15px;
-}
-
-.stat-summary h3 {
-  color: #333;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.summary-stat {
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.summary-value {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #667eea;
-  margin-bottom: 0.5rem;
-}
-
-.summary-label {
-  font-size: 0.8rem;
-  color: #666;
-}
-
-.rank-benefits {
-  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-  color: white;
-  padding: 1.5rem;
-  border-radius: 15px;
-}
-
-.rank-benefits h3 {
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.rank-benefits ul {
-  text-align: left;
-  padding-left: 1.5rem;
-}
-
-.rank-benefits li {
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-}
-
 .leaderboard-info {
-  background: #f8f9fa;
+  background: rgba(40, 40, 50, 0.8);
   padding: 1.5rem;
   border-radius: 10px;
   margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .leaderboard-info h4 {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 1rem;
   text-align: center;
+  font-size: 1.2rem;
 }
 
 .leaderboard-info ul {
   text-align: left;
   padding-left: 1.5rem;
-  color: #666;
+  color: #b0b0b0;
 }
 
 .leaderboard-info li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.community-stats {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(0, 188, 212, 0.1));
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.community-stats h3 {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-item {
+  background: rgba(40, 40, 50, 0.8);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
+  background: rgba(50, 50, 60, 0.9);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00BCD4;
+  margin-bottom: 0.2rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #b0b0b0;
+}
+
+@media (max-width: 768px) {
+  .leaderboard {
+    padding: 1.5rem;
+  }
+  
+  .table-header, .table-row {
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .filter-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .filter-tab {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
 }

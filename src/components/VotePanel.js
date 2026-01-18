@@ -16,7 +16,7 @@ function VotePanel() {
       id: 1,
       title: "Help the community",
       description: "Each push adds more points for everyone tomorrow",
-      color: "#4CAF50",
+      color: "#00BCD4",
       emoji: "🤝"
     },
     {
@@ -30,7 +30,7 @@ function VotePanel() {
       id: 3,
       title: "Limit clicks",
       description: "Each player gets limited pushes per day",
-      color: "#2196F3",
+      color: "#9C27B0",
       emoji: "⏱️"
     }
   ];
@@ -159,3 +159,4 @@ function VotePanel() {
 }
 
 export default VotePanel;
+
