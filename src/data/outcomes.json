@@ -1,0 +1,16 @@
+﻿[
+  {
+    "date": "2024-01-01",
+    "pushes": 156,
+    "totalScore": 2345,
+    "averagePushesPerUser": 12.3,
+    "winningVote": 1
+  },
+  {
+    "date": "2024-01-02",
+    "pushes": 189,
+    "totalScore": 2789,
+    "averagePushesPerUser": 15.7,
+    "winningVote": 2
+  }
+]

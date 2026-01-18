@@ -1,0 +1,20 @@
+﻿[
+  {
+    "option": 1,
+    "date": "2024-01-01",
+    "userId": "user1",
+    "timestamp": "2024-01-01T12:00:00.000Z"
+  },
+  {
+    "option": 2,
+    "date": "2024-01-01",
+    "userId": "user2",
+    "timestamp": "2024-01-01T14:30:00.000Z"
+  },
+  {
+    "option": 1,
+    "date": "2024-01-01",
+    "userId": "user3",
+    "timestamp": "2024-01-01T16:45:00.000Z"
+  }
+]
