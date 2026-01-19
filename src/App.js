@@ -51,8 +51,9 @@ function App() {
                 <a href="#" className="footer-link">GitHub</a>
               </div>
               <p className="footer-copyright">
-                © 2024 Push or Pass. A community-driven daily game.
+                © 2026 Push or Pass. A community-driven daily game.
               </p>
+              <p className="footer-copyright">Developed By <a color="white" href="https://bamietechdev.vercel.app">Bamietech</a></p>
             </div>
           </div>
         </footer>
