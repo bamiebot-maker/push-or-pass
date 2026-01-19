@@ -1,78 +1,60 @@
-﻿import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import VotePanel from './components/VotePanel';
-import ButtonGame from './components/ButtonGame';
-import Leaderboard from './components/Leaderboard';
-import { shouldResetDaily, applyDailyReset } from './utils/dailyReset';
-import './App.css';
+﻿import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { initFirebase } from "./firebase/config";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Play from "./components/Play";
+import Vote from "./components/Vote";
+import Leaderboard from "./components/Leaderboard";
+import "./App.css";
 
 function App() {
-  const [lastReset, setLastReset] = useState(localStorage.getItem('lastReset') || '');
-  const [gamePhase, setGamePhase] = useState('vote'); // 'vote' or 'play'
-
-  // Check for daily reset
+  const [initialized, setInitialized] = useState(false);
+  
   useEffect(() => {
-    const checkReset = () => {
-      if (shouldResetDaily(lastReset)) {
-        applyDailyReset();
-        const now = new Date().toISOString().split('T')[0];
-        localStorage.setItem('lastReset', now);
-        setLastReset(now);
-        setGamePhase('vote');
-      } else {
-        // After voting period (for demo, we'll use a simple logic)
-        // In real app, you'd have time-based logic
-        const hasVotedToday = localStorage.getItem('hasVotedToday');
-        if (hasVotedToday) {
-          setGamePhase('play');
-        }
-      }
+    const initialize = async () => {
+      await initFirebase();
+      setInitialized(true);
     };
-
-    checkReset();
-    const interval = setInterval(checkReset, 60000); // Check every minute
     
-    return () => clearInterval(interval);
-  }, [lastReset]);
-
+    initialize();
+  }, []);
+  
+  if (!initialized) {
+    return (
+      <div className="loading-container">
+        <div className="loading"></div>
+        <p className="text-secondary">Initializing game...</p>
+      </div>
+    );
+  }
+  
   return (
     <Router>
-      <div className="App">
-        <header className="app-header">
-          <h1>🔥 Push or Pass</h1>
-          <p className="tagline">The Daily Community Button Game</p>
-          <div className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/play">Play</Link>
-            <Link to="/vote">Vote</Link>
-            <Link to="/leaderboard">Leaderboard</Link>
-          </div>
-          <div className="phase-indicator">
-            Current Phase: <span className="phase-badge">{gamePhase.toUpperCase()}</span>
-          </div>
-        </header>
-
-        <main className="app-main">
+      <div className="min-h-screen bg-background-color">
+        <Navbar />
+        <main className="container py-8">
           <Routes>
-            <Route path="/" element={
-              <div className="home-container">
-                <h2>Welcome to Push or Pass!</h2>
-                <p>Every day, the community votes on tomorrow's button behavior, then everyone plays!</p>
-                <div className="action-buttons">
-                  <Link to="/vote" className="action-button vote-button">Vote for Tomorrow</Link>
-                  <Link to="/play" className="action-button play-button">Play Today's Game</Link>
-                </div>
-              </div>
-            } />
-            <Route path="/vote" element={<VotePanel />} />
-            <Route path="/play" element={<ButtonGame />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/play" element={<Play />} />
+            <Route path="/vote" element={<Vote />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
           </Routes>
         </main>
-
-        <footer className="app-footer">
-          <p>Push or Pass © {new Date().getFullYear()} | Daily reset at midnight UTC</p>
-          <p>Built By <a href="https://bamietechdev.vercel.app">Bamietech</a></p>
+        <footer className="footer">
+          <div className="container">
+            <div className="footer-content">
+              <div className="footer-links">
+                <a href="#" className="footer-link">Privacy Policy</a>
+                <a href="#" className="footer-link">Terms of Service</a>
+                <a href="#" className="footer-link">Contact</a>
+                <a href="#" className="footer-link">GitHub</a>
+              </div>
+              <p className="footer-copyright">
+                © 2024 Push or Pass. A community-driven daily game.
+              </p>
+            </div>
+          </div>
         </footer>
       </div>
     </Router>
